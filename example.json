@@ -1,8 +1,15 @@
 {
+    "variables": {
+      "client_id": "{{env `ARM_CLIENT_ID`}}",
+      "client_secret": "{{env `ARM_CLIENT_SECRET`}}",
+      "subscription_id": "{{env `ARM_SUBSCRIPTION_ID`}}",
+      "resource_group": "{{env `ARM_RESOURCE_GROUP`}}"
+    },
     "builders": [{
       "type": "azure-chroot",
       "image_resource_id": "/subscriptions/05be085b-86ea-4336-addc-38fd56051a9e/resourceGroups/imgRepoRG/providers/Microsoft.Compute/images/MyUbuntuOSImage-{{timestamp}}",
       "source": "/subscriptions/05be085b-86ea-4336-addc-38fd56051a9e/resourceGroups/MYTFRG/providers/Microsoft.Compute/disks/ubuntu1640707-osdisk"
+      "copy_files":[]
     }],
     "provisioners": [{
       "inline": [

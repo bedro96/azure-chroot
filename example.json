@@ -8,7 +8,7 @@
     "builders": [{
       "type": "azure-chroot",
       "image_resource_id": "/subscriptions/05be085b-86ea-4336-addc-38fd56051a9e/resourceGroups/imgRepoRG/providers/Microsoft.Compute/images/MyUbuntuOSImage-{{timestamp}}",
-      "source": "/subscriptions/05be085b-86ea-4336-addc-38fd56051a9e/resourceGroups/MYTFRG/providers/Microsoft.Compute/disks/ubuntu1640613-osdisk",
+      "source": "/subscriptions/05be085b-86ea-4336-addc-38fd56051a9e/resourceGroups/MYTFRG/providers/Microsoft.Compute/disks/ubuntu1640-osdisk",
       "copy_files":[]
     }],
     "provisioners": [{

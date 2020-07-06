@@ -1,4 +1,4 @@
-### Azure-chroot on Packer v.1.6.0.
+### Azure-chroot in Packer v.1.6.0.
 * [Packer Official Documentation](https://www.packer.io/docs/builders/azure/chroot)
 
 Following scripts has been tested with Ubuntu 18.04.
@@ -18,6 +18,9 @@ packer --version
 ```
 
 ### Compose init_chroot.sh file as a env setup file
+Please update with your environment information.
+For creating Azure Service Principal, refer to this [link](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest#password-based-authentication).
+
 ```bash
 #init_chroot.sh
 #!/bin/bash

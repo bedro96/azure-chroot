@@ -1,11 +1,11 @@
 ### Azure-chroot on Packer v.1.6.0.
 * [Packer Official Documentation](https://www.packer.io/docs/builders/azure/chroot)
 ```bash
-### clone git
+### Clone this git
 git clone https://github.com/bedro96/azure-chroot.git
-### folder called azure-chroot is created.
+### Move to folder created as azure-chroot.
 cd azure-chroot
-### https://www.packer.io/downloads 
+### Refer to https://www.packer.io/downloads for most resent linux build. 
 wget https://releases.hashicorp.com/packer/1.6.0/packer_1.6.0_linux_amd64.zip
 sudo apt-get install -y unzip
 sudo mv packer /usr/bin
@@ -14,7 +14,7 @@ rm packer_1.6.0_linux_amd64.zip
 packer --version
 ```
 
-### compose a init_chroot.sh file as a env setup file
+### Compose a init_chroot.sh file as a env setup file
 ```bash
 #init_chroot.sh
 #!/bin/bash
@@ -33,3 +33,6 @@ To execute packer you need root privilege. Execute with sudo -E.
 ```bash
 sudo -E packer build ubuntu1804disktosig.json
 ```
+
+### Exmaple 1) Source from managed disk and create a Azure managed custom image.
+

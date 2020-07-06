@@ -1,0 +1,38 @@
+{
+    "variables": {
+      "client_id": "{{env `ARM_CLIENT_ID`}}",
+      "client_secret": "{{env `ARM_CLIENT_SECRET`}}",
+      "subscription_id": "{{env `ARM_SUBSCRIPTION_ID`}}",
+      "resource_group": "{{env `ARM_RESOURCE_GROUP`}}",
+      "sourceDiskResID": "{{env `ARM_SOURCE_DISK_RESOURCE_ID`}}"
+    },
+    "builders": [{
+      "type": "azure-chroot",
+      "command_wrapper": "sudo {{.Command}}",
+      "client_id": "{{user `client_id`}}",
+      "client_secret": "{{user `client_secret`}}",
+      "subscription_id": "{{user `subscription_id`}}",
+      "shared_image_destination": {
+          "resource_group": "{{user `resource_group`}}",
+          "gallery_name": "ubuntu1804sig",
+          "image_name": "ubuntu1804image",
+          "image_version": "0.0.8",
+          "target_regions": [
+              {
+                  "name": "koreacentral",
+                  "replicas": 1,
+                  "storage_account_type": "Standard_LRS"
+              }
+          ]
+      },
+      "source": "/subscriptions/{{user `subscription_id`}}/resourceGroups/{{user `resource_group`}}/providers/Microsoft.Compute/galleries/ubuntu1804sig/images/ubuntu1804image/versions/0.0.7"
+    }],
+    "provisioners": [{
+      "inline": [
+        "sudo apt-get update",
+        "sudo apt-get install resolvconf -y"
+      ],
+      "inline_shebang": "/bin/sh -x",
+      "type": "shell"
+    }]
+}

@@ -1,5 +1,5 @@
-### Excute following command from provisioned image
-
+### Azure-chroot on Packer v.1.6.0.
+..* [Packer Official Documentation]: https://www.packer.io/docs/builders/azure/chroot
 ```bash
 ### clone git
 git clone https://github.com/bedro96/azure-chroot.git

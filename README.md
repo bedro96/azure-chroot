@@ -1,5 +1,7 @@
 ### Azure-chroot on Packer v.1.6.0.
 * [Packer Official Documentation](https://www.packer.io/docs/builders/azure/chroot)
+Following scripts has been tested with Ubuntu 18.04.
+
 ```bash
 ### Clone this git
 git clone https://github.com/bedro96/azure-chroot.git
@@ -31,8 +33,37 @@ source ./init_chroot.sh
 ```
 To execute packer you need root privilege. Execute with sudo -E.
 ```bash
-sudo -E packer build ubuntu1804disktosig.json
+sudo -E packer build template.json
 ```
 
 ### Exmaple 1) Source from managed disk and create a Azure managed custom image.
+This would be best if packer resides on one of Azure vm where you want to make master image.
+With this code, you would make a specialized image but it will provision like a generalized image.
+So when this images is deployed the hostname will be changed accordingly but the users' information like authorized_keys will remain. 
+```bash
+sudo -E packer build example_1.6.0_ubuntu1804.json
+```
 
+This is a example code to deploy a VM from the image
+```bash
+az vm create -n ubuntuvm04 -g ubuntuvm02rg -l koreacentral --admin-username kunhokoxxx --ssh-key-values @~/.ssh/id_rsa.pub --image /subscriptions/05be085b-86ea-4336-addc-38fd5605xxxx/resourceGroups/imgRepoRG/providers/Microsoft.Compute/images/ubuntu1804img-1593952516
+```
+
+### Exmaple 2) Source from managed disk and create a SIG image version.
+This would be ideal if you want to stick to specialized image and building the very first image, 
+and need to leverage replication feature of Shared Image Gallery.
+As this image will be treated as specialize image, the hostname will be preserved as well as user info, making identical twin.
+The only fallback is that it takes some time to upload the image.
+```bash
+sudo -E packer build ubuntu1804disktosig.json
+```
+
+### Exmaple 3) Source from managed disk and create a Azure managed custom image.
+This would be ideal if you want to update image version on Shared Image Gallery.
+```bash
+sudo -E packer build ubuntu1804sigtosig.json
+```
+This is example code to deploy a VM form SIG.
+```bash
+az vm create -n ubuntuvm08 -g ubuntuvm02rg -l koreacentral --image /subscriptions/05be085b-86ea-4336-addc-38fd5605xxxx/resourcegroups/imgreporg/providers/microsoft.compute/galleries/ubuntu1804sig/images/ubuntu1804image/versions/0.0.8 --specialized
+```

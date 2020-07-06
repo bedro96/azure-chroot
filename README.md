@@ -5,11 +5,13 @@
 git clone https://github.com/bedro96/azure-chroot.git
 ### folder called azure-chroot is created.
 cd azure-chroot
-chmod +x download_packer.sh
-./download_packer.sh
-COMPUTENAME=$(curl -H Metadata:true "http://169.254.169.254/metadata/instance/compute/name?api-version=2017-08-01&format=text")
-sed -i -e "s/ubuntu1640/$COMPUTENAME/g" ~/azure-chroot/example.json
-sudo ./packer build example.json
+### https://www.packer.io/downloads 
+wget https://releases.hashicorp.com/packer/1.6.0/packer_1.6.0_linux_amd64.zip
+sudo apt-get install -y unzip
+sudo mv packer /usr/bin
+rm packer_1.6.0_linux_amd64.zip
+### packer version check
+packer --version
+
+
 ```
-### Reference
-https://docs.microsoft.com/en-us/azure/virtual-machines/windows/instance-metadata-service

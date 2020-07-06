@@ -19,7 +19,7 @@ packer --version
 
 ### Compose init_chroot.sh file as a env setup file
 Please update with your environment information.
-For creating Azure Service Principal, refer to this [link](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest#password-based-authentication).
+For creating an Azure Service Principal, refer to this [link](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest#password-based-authentication).
 
 ```bash
 #init_chroot.sh
@@ -44,6 +44,7 @@ sudo -E packer build template.json
 This would be best if packer resides on one of the Azure vm which you want to make the master image from.
 With this code, you would make a specialized image but it will provision like a generalized image.
 So when this images is deployed the hostname will be changed accordingly but the users' information like authorized_keys will remain. 
+Quick reference on [this topic](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/shared-image-galleries#generalized-and-specialized-images).
 ```bash
 sudo -E packer build example_1.6.0_ubuntu1804.json
 ```
@@ -61,15 +62,19 @@ The only fallback is that it takes some time to upload the image.
 ```bash
 sudo -E packer build ubuntu1804disktosig.json
 ```
+This is example code to deploy a VM form version 0.0.7 of SIG.
+```bash
+az vm create -n ubuntuvm08 -g ubuntuvm02rg -l koreacentral --image /subscriptions/05be085b-86ea-4336-addc-38fd5605xxxx/resourcegroups/imgreporg/providers/microsoft.compute/galleries/ubuntu1804sig/images/ubuntu1804image/versions/0.0.7 --specialized
+```
 
 ### Exmaple 3) Source from managed disk and create a Azure managed custom image.
 This would be ideal if you want to update image version on Shared Image Gallery.
 ```bash
 sudo -E packer build ubuntu1804sigtosig.json
 ```
-This is example code to deploy a VM form SIG.
+This is example code to deploy a VM with latest version of SIG.
 ```bash
-az vm create -n ubuntuvm08 -g ubuntuvm02rg -l koreacentral --image /subscriptions/05be085b-86ea-4336-addc-38fd5605xxxx/resourcegroups/imgreporg/providers/microsoft.compute/galleries/ubuntu1804sig/images/ubuntu1804image/versions/0.0.8 --specialized
+az vm create -n ubuntuvm08 -g ubuntuvm02rg -l koreacentral --image /subscriptions/05be085b-86ea-4336-addc-38fd5605xxxx/resourcegroups/imgreporg/providers/microsoft.compute/galleries/ubuntu1804sig/images/ubuntu1804image/versions/latest --specialized
 ```
 
 ### Ubuntu image hasving issue with name resolution.

@@ -43,7 +43,7 @@ sudo -E packer build template.json
 ### Exmaple 1) Source from managed disk and create a Azure managed custom image.
 This would be best if packer resides on one of the Azure vm which you want to make the master image from.
 With this code, you would make a specialized image but it will provision like a generalized image.
-So when this images is deployed the hostname will be changed accordingly but the users' information like authorized_keys will remain. 
+So when this images is deployed the hostname will be updated accordingly but the users' information like authorized_keys will remain. 
 Quick reference on [this topic](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/shared-image-galleries#generalized-and-specialized-images).
 ```bash
 sudo -E packer build example_1.6.0_ubuntu1804.json
@@ -77,8 +77,8 @@ This is example code to deploy a VM with latest version of SIG.
 az vm create -n ubuntuvm08 -g ubuntuvm02rg -l koreacentral --image /subscriptions/05be085b-86ea-4336-addc-38fd5605xxxx/resourcegroups/imgreporg/providers/microsoft.compute/galleries/ubuntu1804sig/images/ubuntu1804image/versions/latest --specialized
 ```
 
-### Ubuntu image hasving issue with name resolution.
-To mitigate this issue, a scipt has been implmented in ``` /etc/init.d/fixresolv.conf ``` and created a symbolic link ```/etc/rc5.d/S01fixresolv.conf```. Depending on your linux dist., you need to adjust the script accordingly. This happens when resolv.conf is copied to Packer build and get deleted during clean up. There is workaround to pass empty string for ``` "copy_files" but this would be only viable solution when Packer providers doesn't require name resolution.
+### Ubuntu image having issue with name resolution.
+To mitigate this issue, a scipt has been implmented in ``` /etc/init.d/fixresolv.conf ``` and created a symbolic link ```/etc/rc5.d/S01fixresolv.conf```. Depending on your linux dist., you need to adjust the script accordingly. This happens when resolv.conf is copied into Packer build and gets deleted during clean up. There is workaround to pass empty string for ``` "copy_files" but this would be only viable solution when Packer providers doesn't require name resolution.
 ```bash 
 ### file: fixresolv.conf
 #!/bin/sh

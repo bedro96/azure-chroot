@@ -43,8 +43,8 @@ sudo -E packer build template.json
 ### Exmaple 1) Source from managed disk and create a Azure managed custom image.
 This would be best if packer resides on one of the Azure vm which you want to make the master image from.
 With this code, you would make a specialized image but it will provision like a generalized image.
-So when this images is deployed the hostname will be updated accordingly but the users' information like authorized_keys will remain. 
-Quick reference on [this topic](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/shared-image-galleries#generalized-and-specialized-images).
+So when this images is deployed, the hostname will be updated accordingly but the users' information like authorized_keys will remain. 
+Quick reference on this topic is [here](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/shared-image-galleries#generalized-and-specialized-images).
 ```bash
 sudo -E packer build example_1.6.0_ubuntu1804.json
 ```
